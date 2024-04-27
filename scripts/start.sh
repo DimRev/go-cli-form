@@ -1,0 +1,1 @@
+go build -o go-cli-form && ./go-cli-form
