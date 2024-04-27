@@ -22,6 +22,7 @@ func init() {
 		"magenta_fg": "\x1b[35m",
 		"cyan_fg":    "\x1b[36m",
 		"white_fg":   "\x1b[37m",
+		"gray_fg":    "\x1b[90m",
 		"default_fg": "\x1b[39m",
 
 		"left_arrow":  "\x1b[D",

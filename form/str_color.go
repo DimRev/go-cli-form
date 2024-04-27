@@ -23,3 +23,6 @@ func CyanStr(s string) string {
 func WhiteStr(s string) string {
 	return fmt.Sprint(ANSI["white_fg"], s, ANSI["default_fg"])
 }
+func GrayStr(s string) string {
+	return fmt.Sprint(ANSI["gray_fg"], s, ANSI["default_fg"])
+}

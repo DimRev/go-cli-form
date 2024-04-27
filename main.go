@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 
 	"github.com/DimRev/go-cli-form/form"
@@ -21,12 +22,13 @@ func main() {
 	question_4 := "This is the fourth question"
 	options1 := []string{"1", "2", "3", "4"}
 	options2 := []string{"yes", "no"}
-	options3 := []string{"cool", "no"}
+	options3 := []string{"hi", "121", "3", "cool", "5", "hello world", "7"}
 
 	form.Start()
-	form.FormOpenQuestion(scanner, question_1)
-	form.FormOptionsSelect(question_2, options1)
-	form.FormOptionsSelect(question_3, options2)
-	form.FormOptionsSelect(question_4, options3)
+	form.TextInput(scanner, question_1)
+	form.SelectInput(question_2, options1)
+	form.SelectInput(question_3, options2)
+	res := form.MultiSelectInput(question_4, options3)
+	fmt.Println(res)
 	form.End()
 }
