@@ -1,19 +1,18 @@
 package form
 
 import (
-	"bufio"
 	"fmt"
 
 	"github.com/eiannone/keyboard"
 )
 
-func TextInput(s *bufio.Scanner, qst string) string {
+func (f *Form) TextInput(qst string) string {
 	var answer *string
 	fmt.Print(ANSI["enable_cur"])
 	fmt.Print(GREEN_ARROW, qst, ": ")
 
-	s.Scan()
-	input := s.Text()
+	f.Scanner.Scan()
+	input := f.Scanner.Text()
 
 	answer = &input
 
@@ -27,7 +26,7 @@ func TextInput(s *bufio.Scanner, qst string) string {
 	return *answer
 }
 
-func SelectInput(qst string, opts []string) string {
+func (f *Form) SelectInput(qst string, opts []string) string {
 	answerIdx := 0
 
 	err := keyboard.Open()
@@ -101,7 +100,7 @@ func selectOptions(opts []string, ansIdx int, isLocked bool) string {
 	return formattedString
 }
 
-func MultiSelectInput(qst string, opts []string) []string {
+func (f *Form) MultiSelectInput(qst string, opts []string) []string {
 	selectedIdx := 0
 	answerBools := make([]bool, len(opts))
 

@@ -1,6 +1,10 @@
 package form
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
 
 var ANSI map[string]string
 var GREEN_ARROW string
@@ -33,10 +37,28 @@ func init() {
 	LINEUP_CLEAR_LINE = fmt.Sprint(ANSI["cursor_up"], ANSI["delete_line"])
 }
 
-func Start() {
-	fmt.Print(ANSI["disable_cur"])
+type Form struct {
+	Scanner *bufio.Scanner
 }
 
-func End() {
+type FormInterface interface {
+	TextInput(qst string) string
+	SelectInput(qst string, opts []string) string
+	MultiSelectInput(qst string, opts []string) []string
+	End()
+}
+
+func NewForm(scanner *bufio.Scanner) *Form {
+	return &Form{Scanner: scanner}
+}
+
+func Start() Form {
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Print(ANSI["disable_cur"])
+	return *NewForm(scanner)
+}
+
+func (f *Form) End() {
 	fmt.Print(ANSI["enable_cur"])
 }

@@ -1,10 +1,6 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
-	"os"
-
 	"github.com/DimRev/go-cli-form/form"
 )
 
@@ -14,8 +10,6 @@ var LINEUP_CLEAR_LINE string
 
 func main() {
 
-	scanner := bufio.NewScanner(os.Stdin)
-
 	question_1 := "This is the first question"
 	question_2 := "This is the second question"
 	question_3 := "This is the third question"
@@ -24,11 +18,10 @@ func main() {
 	options2 := []string{"yes", "no"}
 	options3 := []string{"hi", "121", "3", "cool", "5", "hello world", "7"}
 
-	form.Start()
-	form.TextInput(scanner, question_1)
-	form.SelectInput(question_2, options1)
-	form.SelectInput(question_3, options2)
-	res := form.MultiSelectInput(question_4, options3)
-	fmt.Println(res)
-	form.End()
+	Form := form.Start()
+	Form.TextInput(question_1)
+	Form.SelectInput(question_2, options1)
+	Form.MultiSelectInput(question_3, options2)
+	Form.MultiSelectInput(question_4, options3)
+	Form.End()
 }
