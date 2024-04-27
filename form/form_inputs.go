@@ -1,4 +1,4 @@
-package main
+package form
 
 import (
 	"bufio"
@@ -42,7 +42,7 @@ func FormOptionsSelect(q string, o []string) string {
 		_ = keyboard.Close()
 	}()
 
-	fmt.Print(GREEN_ARROW, q, " ", displayOption(o, answerIdx, false), "\n")
+	fmt.Print(GREEN_ARROW, q, " [", displayOption(o, answerIdx, false), "]\n")
 
 	for {
 		_, key, err := keyboard.GetKey()
@@ -70,9 +70,9 @@ func FormOptionsSelect(q string, o []string) string {
 			break
 		}
 
-		fmt.Print(LINEUP_CLEAR_LINE, GREEN_ARROW, q, " ", displayOption(o, answerIdx, false), "\n")
+		fmt.Print(LINEUP_CLEAR_LINE, GREEN_ARROW, q, " [", displayOption(o, answerIdx, false), "]\n")
 	}
-	fmt.Print(LINEUP_CLEAR_LINE, q, " ", displayOption(o, answerIdx, true), "\n")
+	fmt.Print(LINEUP_CLEAR_LINE, q, " [", displayOption(o, answerIdx, true), "]\n")
 	return o[answerIdx]
 }
 
@@ -90,6 +90,9 @@ func displayOption(o []string, aIdx int, locked bool) string {
 		}
 		if idx < len(o)-1 {
 			formattedString += " / "
+		} else {
+			formattedString += " "
+
 		}
 	}
 	return formattedString
