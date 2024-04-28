@@ -21,7 +21,7 @@ func main() {
 	options3 := []string{"< 1", "1", "2", "3", "4", "5+"}
 	options4 := []string{"WebApp", "Bot", "Crawler", "CLI-Tool", "Game", "Mesh", "3D-Animation", "Embedded", "Back End Infra"}
 
-	fmt.Println(FORM_LOGO, "\n\n")
+	fmt.Println(FORM_LOGO)
 
 	Form := form.Start()
 	res1 := Form.TextInput(question_1)

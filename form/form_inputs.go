@@ -181,7 +181,11 @@ func multiselectOptions(opts []string, sel int, ansBools []bool, locked bool, rm
 			}
 		} else {
 			if idx == sel {
-				formattedString += fmt.Sprint(" ⚪  ", GreenStr(option))
+				if locked {
+					formattedString += fmt.Sprint(" ⚪  ", option)
+				} else {
+					formattedString += fmt.Sprint(" ⚪  ", GreenStr(option))
+				}
 			} else {
 				formattedString += fmt.Sprint(" ⚪  ", option)
 			}
