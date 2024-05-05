@@ -61,6 +61,7 @@ Using up/down to navigate the options from the options slice, use space to selec
 
 ## TODO
 
+- [ ] Implement testing
 - [ ] Customize form styles/themes
 - [ ] Add instructions under the current selected
 - [ ] Implement steps
