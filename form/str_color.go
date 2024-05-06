@@ -2,6 +2,18 @@ package form
 
 import "fmt"
 
+func (f *Form) TextStrColor(s string) string {
+	return fmt.Sprint(f.TextColor, s)
+}
+
+func (f *Form) MarkedStrColor(s string) string {
+	return fmt.Sprint(f.MarkColor, s, f.TextColor)
+}
+
+func (f *Form) SelectedStrColor(s string) string {
+	return fmt.Sprint(f.SelectColor, s, f.TextColor)
+}
+
 func RedStr(s string) string {
 	return fmt.Sprint(ANSI["red_fg"], s, ANSI["default_fg"])
 }

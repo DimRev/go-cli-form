@@ -7,6 +7,7 @@ import (
 )
 
 var ANSI map[string]string
+var SYMBOLS map[string]string
 var GREEN_ARROW string
 var LINEUP_CLEAR_LINE string
 
@@ -33,12 +34,40 @@ func init() {
 		"right_arrow": "\x1b[C",
 	}
 
+	SYMBOLS = map[string]string{
+		"circle_yellow":      " 🟡  ",
+		"circle_white":       " ⚪  ",
+		"circle_black":       " ⚫  ",
+		"circle_red":         " 🔴  ",
+		"circle_blue":        " 🔵  ",
+		"circle_orange":      " 🟠  ",
+		"circle_lightorange": " 🟡  ",
+		"circle_green":       " 🟢  ",
+		"circle_purple":      " 🟣  ",
+		"circle_brown":       " 🟤  ",
+
+		"arrowIndicator": " ➜  ",
+	}
+
 	GREEN_ARROW = fmt.Sprint(GreenStr(" ➜  "))
 	LINEUP_CLEAR_LINE = fmt.Sprint(ANSI["cursor_up"], ANSI["delete_line"])
 }
 
 type Form struct {
 	Scanner *bufio.Scanner
+	FormTheme
+}
+
+type FormTheme struct {
+	TextColor   string
+	MarkColor   string
+	SelectColor string
+
+	BulletPointDefault  string
+	BulletPointMarked   string
+	BulletPointSelected string
+
+	SelectedLineIndicator string
 }
 
 type FormInterface interface {
@@ -48,15 +77,42 @@ type FormInterface interface {
 	End()
 }
 
-func NewForm(scanner *bufio.Scanner) *Form {
-	return &Form{Scanner: scanner}
+func NewForm(scanner *bufio.Scanner, theme string) *Form {
+	selectedTheme := FormTheme{
+		TextColor:   ANSI["default_fg"],
+		MarkColor:   ANSI["green_fg"],
+		SelectColor: ANSI["yellow_fg"],
+
+		BulletPointDefault:  SYMBOLS["circle_white"],
+		BulletPointMarked:   SYMBOLS["circle_green"],
+		BulletPointSelected: SYMBOLS["circle_yellow"],
+
+		SelectedLineIndicator: SYMBOLS["arrow"],
+	}
+
+	if theme == "blue" {
+		selectedTheme = FormTheme{
+			TextColor:   ANSI["blue_fg"],
+			MarkColor:   ANSI["green_fg"],
+			SelectColor: ANSI["yellow_fg"],
+
+			BulletPointDefault:  SYMBOLS["circle_blue"],
+			BulletPointMarked:   SYMBOLS["circle_green"],
+			BulletPointSelected: SYMBOLS["circle_yellow"],
+		}
+	}
+
+	return &Form{
+		Scanner:   scanner,
+		FormTheme: selectedTheme,
+	}
 }
 
-func Start() Form {
+func Start(theme string) Form {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	fmt.Print(ANSI["disable_cur"])
-	return *NewForm(scanner)
+	return *NewForm(scanner, theme)
 }
 
 func (f *Form) End() {

@@ -23,7 +23,7 @@ func main() {
 
 	fmt.Println(FORM_LOGO)
 
-	Form := form.Start()
+	Form := form.Start("blue")
 	res1 := Form.TextInput(question_1)
 	res2 := Form.MultiSelectInput(question_2, options2)
 	res3 := Form.SelectInput(question_3, options3)
