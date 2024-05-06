@@ -9,7 +9,7 @@ import (
 func (f *Form) TextInput(qst string) string {
 	var answer *string
 	fmt.Print(ANSI["enable_cur"])
-	fmt.Print(GREEN_ARROW, qst, ": ")
+	fmt.Print(f.SelectedLineIndicator, f.TextStrColor(qst), ": ")
 
 	f.Scanner.Scan()
 	input := f.Scanner.Text()
@@ -17,9 +17,9 @@ func (f *Form) TextInput(qst string) string {
 	answer = &input
 
 	if *answer != "" {
-		fmt.Print(LINEUP_CLEAR_LINE, qst, ": ", YellowStr(*answer), "\n")
+		fmt.Print(MACROS["clean_and_up"], f.TextStrColor(qst, ": "), f.SelectedStrColor(*answer), "\n")
 	} else {
-		fmt.Print(LINEUP_CLEAR_LINE, qst, ": ", "\n")
+		fmt.Print(MACROS["clean_and_up"], f.TextStrColor(qst, ": "), "\n")
 	}
 
 	fmt.Print(ANSI["disable_cur"])
@@ -38,9 +38,7 @@ func (f *Form) SelectInput(qst string, opts []string) string {
 		_ = keyboard.Close()
 	}()
 
-	fmt.Print(GREEN_ARROW, qst,
-		": ", selectOptions(opts, answerIdx, false), "\n",
-	)
+	fmt.Print(f.SelectedLineIndicator, f.TextStrColor(qst, ": "), f.selectOptions(opts, answerIdx, false), "\n")
 
 	for {
 		_, key, err := keyboard.GetKey()
@@ -68,24 +66,20 @@ func (f *Form) SelectInput(qst string, opts []string) string {
 			break
 		}
 
-		fmt.Print(LINEUP_CLEAR_LINE, GREEN_ARROW, qst,
-			": ", selectOptions(opts, answerIdx, false), "\n",
-		)
+		fmt.Print(MACROS["clean_and_up"], f.SelectedLineIndicator, f.TextStrColor(qst, ": "), f.selectOptions(opts, answerIdx, false), "\n")
 	}
-	fmt.Print(LINEUP_CLEAR_LINE, qst,
-		": ", selectOptions(opts, answerIdx, true), "\n",
-	)
+	fmt.Print(MACROS["clean_and_up"], f.FormTheme.TextColor, f.TextStrColor(qst, ": "), f.selectOptions(opts, answerIdx, true), "\n")
 	return opts[answerIdx]
 }
 
-func selectOptions(opts []string, ansIdx int, isLocked bool) string {
+func (f *Form) selectOptions(opts []string, ansIdx int, isLocked bool) string {
 	formattedString := ""
 	for idx, option := range opts {
 		if idx == ansIdx {
 			if isLocked {
-				formattedString += fmt.Sprint(YellowStr(option))
+				formattedString += fmt.Sprint(f.SelectedStrColor(option))
 			} else {
-				formattedString += fmt.Sprint(GreenStr(option))
+				formattedString += fmt.Sprint(f.MarkedStrColor(option))
 			}
 		} else {
 			formattedString += fmt.Sprint(option)
@@ -113,9 +107,9 @@ func (f *Form) MultiSelectInput(qst string, opts []string) []string {
 		_ = keyboard.Close()
 	}()
 
-	fmt.Print(GREEN_ARROW, qst, ": \n",
+	fmt.Print(f.SelectedLineIndicator, f.TextStrColor(qst, ": "), "\n",
 		GrayStr("(Press space to select option, enter to lock in your selections)"),
-		multiselectOptions(opts, selectedIdx, answerBools, false, false), "\n",
+		f.multiselectOptions(opts, selectedIdx, answerBools, false, false), "\n",
 	)
 
 	for {
@@ -146,23 +140,23 @@ func (f *Form) MultiSelectInput(qst string, opts []string) []string {
 		}
 
 		fmt.Print(
-			LINEUP_CLEAR_LINE, GREEN_ARROW, qst, ": \n",
+			MACROS["clean_and_up"], f.SelectedLineIndicator, f.TextStrColor(qst, ": "), "\n",
 			GrayStr("(Press space to select option, enter to lock in your selections)"),
-			multiselectOptions(opts, selectedIdx, answerBools, false, true), "\n",
+			f.multiselectOptions(opts, selectedIdx, answerBools, false, true), "\n",
 		)
 	}
-	fmt.Print(LINEUP_CLEAR_LINE, qst, ": \n",
+	fmt.Print(MACROS["clean_and_up"], f.TextStrColor(qst, ": "), "\n",
 		GrayStr("(Press space to select option, enter to lock in your selections)"),
-		multiselectOptions(opts, selectedIdx, answerBools, true, true), "\n",
+		f.multiselectOptions(opts, selectedIdx, answerBools, true, true), "\n",
 	)
 
 	return multiselectResults(opts, answerBools)
 }
 
-func multiselectOptions(opts []string, sel int, ansBools []bool, locked bool, rm bool) string {
+func (f *Form) multiselectOptions(opts []string, sel int, ansBools []bool, locked bool, rm bool) string {
 	if rm {
 		for i := 0; i < len(opts)+1; i++ {
-			fmt.Print(LINEUP_CLEAR_LINE)
+			fmt.Print(MACROS["clean_and_up"])
 		}
 	}
 
@@ -172,22 +166,22 @@ func multiselectOptions(opts []string, sel int, ansBools []bool, locked bool, rm
 		if ansBools[idx] {
 			if idx == sel {
 				if locked {
-					formattedString += fmt.Sprint(" 🟡  ", YellowStr(option))
+					formattedString += fmt.Sprint(f.BulletPointDefault, f.SelectedStrColor(option))
 				} else {
-					formattedString += fmt.Sprint(" 🟡  ", GreenStr(option))
+					formattedString += fmt.Sprint(f.BulletPointMarked, f.MarkedStrColor(option))
 				}
 			} else {
-				formattedString += fmt.Sprint(" 🟡  ", YellowStr(option))
+				formattedString += fmt.Sprint(f.BulletPointSelected, f.SelectedStrColor(option))
 			}
 		} else {
 			if idx == sel {
 				if locked {
-					formattedString += fmt.Sprint(" ⚪  ", option)
+					formattedString += fmt.Sprint(f.BulletPointDefault, f.TextStrColor(option))
 				} else {
-					formattedString += fmt.Sprint(" ⚪  ", GreenStr(option))
+					formattedString += fmt.Sprint(f.BulletPointDefault, f.MarkedStrColor(option))
 				}
 			} else {
-				formattedString += fmt.Sprint(" ⚪  ", option)
+				formattedString += fmt.Sprint(f.BulletPointDefault, f.TextStrColor(option))
 			}
 		}
 

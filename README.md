@@ -10,7 +10,7 @@ To Create a quick cli form put init the form struct using `Form.Start()`
 
 ```go
 func main(){
-  Form := Form.Start()
+  Form := Form.Start("blue")
 
   // Questions
   question_1 := "What is your name"
@@ -34,6 +34,20 @@ func main(){
 ```
 
 After initializing the for you can use the form's input functions:
+
+## Form Themes
+
+```go
+Form.Start("blue")
+```
+
+To select a form theme just pick a theme in the start form command from the currently available themes
+
+- default
+- blue
+  ![blue theme](./assets/blue_theme.png)
+- red
+  ![red theme](./assets/red_theme.png)
 
 ## Form Elements
 
@@ -61,8 +75,8 @@ Using up/down to navigate the options from the options slice, use space to selec
 
 ## TODO
 
+- [x] Customize form styles/themes
 - [ ] Implement testing
-- [ ] Customize form styles/themes
 - [ ] Add instructions under the current selected
 - [ ] Implement steps
 - [ ] Implement back/forward navigation between steps

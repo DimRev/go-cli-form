@@ -21,9 +21,9 @@ func main() {
 	options3 := []string{"< 1", "1", "2", "3", "4", "5+"}
 	options4 := []string{"WebApp", "Bot", "Crawler", "CLI-Tool", "Game", "Mesh", "3D-Animation", "Embedded", "Back End Infra"}
 
-	fmt.Println(FORM_LOGO)
+	fmt.Println(form.BlueStr(FORM_LOGO))
 
-	Form := form.Start()
+	Form := form.Start("blue")
 	res1 := Form.TextInput(question_1)
 	res2 := Form.MultiSelectInput(question_2, options2)
 	res3 := Form.SelectInput(question_3, options3)
