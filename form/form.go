@@ -8,6 +8,7 @@ import (
 
 var ANSI map[string]string
 var SYMBOLS map[string]string
+var MACROS map[string]string
 var GREEN_ARROW string
 var LINEUP_CLEAR_LINE string
 
@@ -49,8 +50,9 @@ func init() {
 		"arrowIndicator": " ➜  ",
 	}
 
-	GREEN_ARROW = fmt.Sprint(GreenStr(" ➜  "))
-	LINEUP_CLEAR_LINE = fmt.Sprint(ANSI["cursor_up"], ANSI["delete_line"])
+	MACROS = map[string]string{
+		"clean_and_up": fmt.Sprint(ANSI["cursor_up"], ANSI["delete_line"]),
+	}
 }
 
 type Form struct {
@@ -87,7 +89,7 @@ func NewForm(scanner *bufio.Scanner, theme string) *Form {
 		BulletPointMarked:   SYMBOLS["circle_green"],
 		BulletPointSelected: SYMBOLS["circle_yellow"],
 
-		SelectedLineIndicator: SYMBOLS["arrow"],
+		SelectedLineIndicator: GreenStr(SYMBOLS["arrowIndicator"]),
 	}
 
 	if theme == "blue" {
@@ -99,6 +101,22 @@ func NewForm(scanner *bufio.Scanner, theme string) *Form {
 			BulletPointDefault:  SYMBOLS["circle_blue"],
 			BulletPointMarked:   SYMBOLS["circle_green"],
 			BulletPointSelected: SYMBOLS["circle_yellow"],
+
+			SelectedLineIndicator: RedStr(SYMBOLS["arrowIndicator"]),
+		}
+	}
+
+	if theme == "red" {
+		selectedTheme = FormTheme{
+			TextColor:   ANSI["red_fg"],
+			MarkColor:   ANSI["blue_fg"],
+			SelectColor: ANSI["green_fg"],
+
+			BulletPointDefault:  SYMBOLS["circle_red"],
+			BulletPointMarked:   SYMBOLS["circle_blue"],
+			BulletPointSelected: SYMBOLS["circle_green"],
+
+			SelectedLineIndicator: YellowStr(SYMBOLS["arrowIndicator"]),
 		}
 	}
 
