@@ -1,8 +1,8 @@
-# Go CLI Form
+# 🚀 Go CLI Form
 
 A simple library focused on creating a web-form like for quick & dirty cli user interactions.
 
-## Installation:
+## 💾 Installation / Usage
 
 run `go get github.com/DimRev/go-cli-form`
 
@@ -35,7 +35,7 @@ func main(){
 
 After initializing the for you can use the form's input functions:
 
-## Form Themes
+## 🎨 Form Themes
 
 ```go
 Form.Start("blue")
@@ -49,7 +49,7 @@ To select a form theme just pick a theme in the start form command from the curr
 - red
   ![red theme](./assets/red_theme.png)
 
-## Form Elements
+## 📝 Form Elements
 
 ### Free text
 
@@ -73,7 +73,7 @@ Form.MultiSelectInput(qst string, opts []string) []string
 
 Using up/down to navigate the options from the options slice, use space to select the option, and enter to submit selection
 
-## TODO
+## 🚔 TODO / Roadmap
 
 - [x] Customize form styles/themes
 - [ ] Implement testing
@@ -84,3 +84,34 @@ Using up/down to navigate the options from the options slice, use space to selec
 - [ ] Add checkbox element
 - [ ] Add password section / hidden text field
 - [ ] Add textarea / multi-line element
+
+## 🤝 Contributing
+
+### Clone the repo
+
+```bash
+git clone https://github.com/DimRev/go-cli-form@latest
+cd go-cli-form
+```
+
+### Build the project
+
+```bash
+go build
+```
+
+### Run the project
+
+```bash
+./go-cli-form
+```
+
+### Run the tests (\*\*need to implement)
+
+```bash
+go test ./...
+```
+
+### Submit a pull request
+
+If you'd like to contribute, please fork the repository and open a pull request to the `master` branch.
