@@ -5,50 +5,50 @@ import (
 	"strings"
 )
 
-func (f *Form) TextStrColor(s ...string) string {
+func (f *Form) textStrColor(s ...string) string {
 	str := strings.Join(s, " ")
 	return (fmt.Sprint(f.TextColor, str))
 }
 
-func (f *Form) MarkedStrColor(s ...string) string {
+func (f *Form) markedStrColor(s ...string) string {
 	str := strings.Join(s, " ")
 	return (fmt.Sprint(f.MarkColor, str, f.TextColor))
 }
 
-func (f *Form) SelectedStrColor(s ...string) string {
+func (f *Form) selectedStrColor(s ...string) string {
 	str := strings.Join(s, " ")
 	return (fmt.Sprint(f.SelectColor, str, f.TextColor))
 }
 
-func RedStr(s ...string) string {
+func redStrColor(s ...string) string {
 	str := strings.Join(s, " ")
 	return (fmt.Sprint(ANSI["red_fg"], str, ANSI["default_fg"]))
 }
-func GreenStr(s ...string) string {
+func greenStrColor(s ...string) string {
 	str := strings.Join(s, " ")
 	return (fmt.Sprint(ANSI["green_fg"], str, ANSI["default_fg"]))
 }
-func YellowStr(s ...string) string {
+func yellowStrColor(s ...string) string {
 	str := strings.Join(s, " ")
 	return (fmt.Sprint(ANSI["yellow_fg"], str, ANSI["default_fg"]))
 }
-func BlueStr(s ...string) string {
+func blueStrColor(s ...string) string {
 	str := strings.Join(s, " ")
 	return (fmt.Sprint(ANSI["blue_fg"], str, ANSI["default_fg"]))
 }
-func MagentaStr(s ...string) string {
+func magentaStrColor(s ...string) string {
 	str := strings.Join(s, " ")
 	return (fmt.Sprint(ANSI["magenta_fg"], str, ANSI["default_fg"]))
 }
-func CyanStr(s ...string) string {
+func cyanStrColor(s ...string) string {
 	str := strings.Join(s, " ")
 	return fmt.Sprint(ANSI["cyan_fg"], str, ANSI["default_fg"])
 }
-func WhiteStr(s ...string) string {
+func whiteStrColor(s ...string) string {
 	str := strings.Join(s, " ")
 	return fmt.Sprint(ANSI["white_fg"], str, ANSI["default_fg"])
 }
-func GrayStr(s ...string) string {
+func grayStrColor(s ...string) string {
 	str := strings.Join(s, " ")
 	return fmt.Sprint(ANSI["gray_fg"], str, ANSI["default_fg"])
 }
