@@ -77,9 +77,13 @@ Using up/down to navigate the options from the options slice, use space to selec
 
 - [x] Customize form styles/themes
 - [x] Implement testing
-- [ ] Need to implement mock keyboard clicks
+- [ ] Implement form steps
+- [ ] 1.  Hold on to the state of the total steps, and current step
+- [ ] 2.  Split the code into logic & render, it should work as the following, each step should calculate all it's logic.
+- [ ] 3.  Make the render function in such a way that form inputs should give it their outputs and it should render everything after some calcs
+- [ ] 4.  rework the tests for the rendering, and business logic
+- [ ] Need to implement mock keyboard clicks (?)
 - [ ] Add instructions under the current selected
-- [ ] Implement steps
 - [ ] Implement back/forward navigation between steps
 - [ ] Animate a loader/progress bar
 - [ ] Add checkbox element
