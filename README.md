@@ -76,7 +76,8 @@ Using up/down to navigate the options from the options slice, use space to selec
 ## 🚔 TODO / Roadmap
 
 - [x] Customize form styles/themes
-- [ ] Implement testing
+- [x] Implement testing
+- [ ] Need to implement mock keyboard clicks
 - [ ] Add instructions under the current selected
 - [ ] Implement steps
 - [ ] Implement back/forward navigation between steps

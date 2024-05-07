@@ -6,10 +6,11 @@ import (
 	"testing"
 )
 
-func TestTextInput(t *testing.T) {
+func TestSelectInput(t *testing.T) {
 	cases := []struct {
 		name          string
 		question      string
+		answers       []string
 		input         string
 		expected      string
 		expectedError string
@@ -18,6 +19,7 @@ func TestTextInput(t *testing.T) {
 		{
 			name:          "normal input",
 			question:      "Test question",
+			answers:       []string{"Test answer 1", "Test answer 2"},
 			input:         "Test answer\n",
 			expected:      "Test answer",
 			expectedError: "",
@@ -25,22 +27,31 @@ func TestTextInput(t *testing.T) {
 		{
 			name:          "empty input",
 			question:      "Test question",
+			answers:       []string{"Test answer 1", "Test answer 2"},
 			input:         "\n",
 			expected:      "",
 			expectedError: "",
 		},
 		{
 			name:          "empty question",
+			answers:       []string{"Test answer 1", "Test answer 2"},
 			question:      "",
-			input:         "",
+			input:         "\n",
 			expected:      "",
 			expectedError: "question cannot be empty",
+		},
+		{
+			name:          "empty answer",
+			answers:       []string{},
+			question:      "Test question",
+			input:         "\n",
+			expected:      "",
+			expectedError: "cannot have no answers",
 		},
 	}
 
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
-			// Redirect stdin and stdout
 			oldStdin := os.Stdin
 			r, w, _ := os.Pipe()
 			os.Stdin = r
