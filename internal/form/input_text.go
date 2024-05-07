@@ -1,8 +1,14 @@
 package form
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
-func (f *Form) TextInput(qst string) string {
+func (f *Form) TextInput(qst string) (string, error) {
+	if qst == "" {
+		return "", errors.New("question cannot be empty")
+	}
 	var answer *string
 	fmt.Print(ANSI["enable_cur"])
 	fmt.Print(f.SelectedLineIndicator, f.textStrColor(qst), ": ")
@@ -19,5 +25,5 @@ func (f *Form) TextInput(qst string) string {
 	}
 
 	fmt.Print(ANSI["disable_cur"])
-	return *answer
+	return *answer, nil
 }

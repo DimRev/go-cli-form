@@ -23,11 +23,23 @@ func main() {
 
 	fmt.Println(FORM_LOGO)
 
-	Form := form.Start("blue")
-	res1 := Form.TextInput(question_1)
-	res2 := Form.MultiSelectInput(question_2, options2)
-	res3 := Form.SelectInput(question_3, options3)
-	res4 := Form.MultiSelectInput(question_4, options4)
+	Form := form.Start("red")
+	res1, err := Form.TextInput(question_1)
+	if err != nil {
+		fmt.Println(err)
+	}
+	res2, err := Form.MultiSelectInput(question_2, options2)
+	if err != nil {
+		fmt.Println(err)
+	}
+	res3, err := Form.SelectInput(question_3, options3)
+	if err != nil {
+		fmt.Println(err)
+	}
+	res4, err := Form.MultiSelectInput(question_4, options4)
+	if err != nil {
+		fmt.Println(err)
+	}
 	Form.End()
 
 	fmt.Print(

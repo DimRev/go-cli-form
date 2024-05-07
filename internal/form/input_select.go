@@ -6,7 +6,7 @@ import (
 	"github.com/eiannone/keyboard"
 )
 
-func (f *Form) SelectInput(qst string, opts []string) string {
+func (f *Form) SelectInput(qst string, opts []string) (string, error) {
 	answerIdx := 0
 
 	err := keyboard.Open()
@@ -49,7 +49,7 @@ func (f *Form) SelectInput(qst string, opts []string) string {
 		fmt.Print(MACROS["clean_and_up"], f.SelectedLineIndicator, f.textStrColor(qst, ": "), f.selectOptions(opts, answerIdx, false), "\n")
 	}
 	fmt.Print(MACROS["clean_and_up"], f.FormTheme.TextColor, f.textStrColor(qst, ": "), f.selectOptions(opts, answerIdx, true), "\n")
-	return opts[answerIdx]
+	return opts[answerIdx], nil
 }
 
 func (f *Form) selectOptions(opts []string, ansIdx int, isLocked bool) string {
