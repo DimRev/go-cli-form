@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/DimRev/go-cli-form/form"
+	"github.com/DimRev/go-cli-form/internal/form"
 )
 
 var ANSI map[string]string
@@ -21,7 +21,7 @@ func main() {
 	options3 := []string{"< 1", "1", "2", "3", "4", "5+"}
 	options4 := []string{"WebApp", "Bot", "Crawler", "CLI-Tool", "Game", "Mesh", "3D-Animation", "Embedded", "Back End Infra"}
 
-	fmt.Println(form.BlueStr(FORM_LOGO))
+	fmt.Println(FORM_LOGO)
 
 	Form := form.Start("blue")
 	res1 := Form.TextInput(question_1)

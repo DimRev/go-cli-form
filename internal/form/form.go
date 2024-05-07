@@ -80,44 +80,14 @@ type FormInterface interface {
 }
 
 func NewForm(scanner *bufio.Scanner, theme string) *Form {
-	selectedTheme := FormTheme{
-		TextColor:   ANSI["default_fg"],
-		MarkColor:   ANSI["green_fg"],
-		SelectColor: ANSI["yellow_fg"],
-
-		BulletPointDefault:  SYMBOLS["circle_white"],
-		BulletPointMarked:   SYMBOLS["circle_green"],
-		BulletPointSelected: SYMBOLS["circle_yellow"],
-
-		SelectedLineIndicator: GreenStr(SYMBOLS["arrowIndicator"]),
-	}
+	selectedTheme := defaultTheme()
 
 	if theme == "blue" {
-		selectedTheme = FormTheme{
-			TextColor:   ANSI["blue_fg"],
-			MarkColor:   ANSI["green_fg"],
-			SelectColor: ANSI["yellow_fg"],
-
-			BulletPointDefault:  SYMBOLS["circle_blue"],
-			BulletPointMarked:   SYMBOLS["circle_green"],
-			BulletPointSelected: SYMBOLS["circle_yellow"],
-
-			SelectedLineIndicator: RedStr(SYMBOLS["arrowIndicator"]),
-		}
+		selectedTheme = blueTheme()
 	}
 
 	if theme == "red" {
-		selectedTheme = FormTheme{
-			TextColor:   ANSI["red_fg"],
-			MarkColor:   ANSI["blue_fg"],
-			SelectColor: ANSI["green_fg"],
-
-			BulletPointDefault:  SYMBOLS["circle_red"],
-			BulletPointMarked:   SYMBOLS["circle_blue"],
-			BulletPointSelected: SYMBOLS["circle_green"],
-
-			SelectedLineIndicator: YellowStr(SYMBOLS["arrowIndicator"]),
-		}
+		selectedTheme = redTheme()
 	}
 
 	return &Form{
