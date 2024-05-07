@@ -6,7 +6,7 @@ import (
 	"github.com/eiannone/keyboard"
 )
 
-func (f *Form) MultiSelectInput(qst string, opts []string) []string {
+func (f *Form) MultiSelectInput(qst string, opts []string) ([]string, error) {
 	selectedIdx := 0
 	answerBools := make([]bool, len(opts))
 
@@ -62,7 +62,7 @@ func (f *Form) MultiSelectInput(qst string, opts []string) []string {
 		f.multiselectOptions(opts, selectedIdx, answerBools, true, true), "\n",
 	)
 
-	return multiselectResults(opts, answerBools)
+	return multiselectResults(opts, answerBools), nil
 }
 
 func (f *Form) multiselectOptions(opts []string, sel int, ansBools []bool, locked bool, rm bool) string {

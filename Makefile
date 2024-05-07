@@ -10,3 +10,6 @@ run: build
 	@./bin/go-cli-form
 
 start: run
+
+test:
+	@go test ./...
