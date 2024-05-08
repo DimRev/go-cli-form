@@ -58,6 +58,7 @@ func init() {
 type Form struct {
 	Scanner *bufio.Scanner
 	FormTheme
+	RenderChannels
 }
 
 type FormTheme struct {
@@ -72,6 +73,13 @@ type FormTheme struct {
 	SelectedLineIndicator string
 }
 
+type RenderChannels struct {
+	renderLineCh       chan Line
+	swapRenderedLineCh chan bool
+	numLinesCleanCh    chan int
+	doneCleanCh        chan struct{}
+}
+
 type FormInterface interface {
 	TextInput(qst string) string
 	SelectInput(qst string, opts []string) string
@@ -80,8 +88,17 @@ type FormInterface interface {
 }
 
 func NewForm(scanner *bufio.Scanner, theme string) *Form {
-	selectedTheme := defaultTheme()
+	lineCh, swapCh := Render()
+	numLineCleanCh, doneCleanCh := Clean()
 
+	renderChannels := RenderChannels{
+		renderLineCh:       lineCh,
+		swapRenderedLineCh: swapCh,
+		numLinesCleanCh:    numLineCleanCh,
+		doneCleanCh:        doneCleanCh,
+	}
+
+	selectedTheme := defaultTheme()
 	if theme == "blue" {
 		selectedTheme = blueTheme()
 	}
@@ -91,8 +108,9 @@ func NewForm(scanner *bufio.Scanner, theme string) *Form {
 	}
 
 	return &Form{
-		Scanner:   scanner,
-		FormTheme: selectedTheme,
+		Scanner:        scanner,
+		FormTheme:      selectedTheme,
+		RenderChannels: renderChannels,
 	}
 }
 

@@ -52,3 +52,7 @@ func grayStrColor(s ...string) string {
 	str := strings.Join(s, " ")
 	return fmt.Sprint(ANSI["gray_fg"], str, ANSI["default_fg"])
 }
+func defaultStrColor(s ...string) string {
+	str := strings.Join(s, " ")
+	return fmt.Sprint(ANSI["default_fg"], str, ANSI["default_fg"])
+}
