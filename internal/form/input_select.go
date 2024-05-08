@@ -18,7 +18,7 @@ func (f *Form) SelectInput(qst string, opts []string) (string, error) {
 		_ = keyboard.Close()
 	}()
 
-	fmt.Print(f.SelectedLineIndicator, f.textStrColor(qst, ": "), f.selectOptions(opts, answerIdx, false), "\n")
+	fmt.Print(f.Indicator, f.textStrColor(qst, ": "), f.selectOptions(opts, answerIdx, false), "\n")
 
 	for {
 		_, key, err := keyboard.GetKey()
@@ -46,7 +46,7 @@ func (f *Form) SelectInput(qst string, opts []string) (string, error) {
 			break
 		}
 
-		fmt.Print(MACROS["clean_and_up"], f.SelectedLineIndicator, f.textStrColor(qst, ": "), f.selectOptions(opts, answerIdx, false), "\n")
+		fmt.Print(MACROS["clean_and_up"], f.Indicator, f.textStrColor(qst, ": "), f.selectOptions(opts, answerIdx, false), "\n")
 	}
 	fmt.Print(MACROS["clean_and_up"], f.FormTheme.TextColor, f.textStrColor(qst, ": "), f.selectOptions(opts, answerIdx, true), "\n")
 	return opts[answerIdx], nil

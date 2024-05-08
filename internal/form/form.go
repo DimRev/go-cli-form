@@ -70,7 +70,8 @@ type FormTheme struct {
 	BulletPointMarked   string
 	BulletPointSelected string
 
-	SelectedLineIndicator string
+	Indicator      string
+	IndicatorColor string
 }
 
 type RenderChannels struct {
@@ -122,5 +123,9 @@ func Start(theme string) Form {
 }
 
 func (f *Form) End() {
+	close(f.doneCleanCh)
+	close(f.numLinesCleanCh)
+	close(f.renderLineCh)
+	close(f.swapRenderedLineCh)
 	fmt.Print(ANSI["enable_cur"])
 }

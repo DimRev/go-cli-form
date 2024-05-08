@@ -19,7 +19,7 @@ func (f *Form) MultiSelectInput(qst string, opts []string) ([]string, error) {
 		_ = keyboard.Close()
 	}()
 
-	fmt.Print(f.SelectedLineIndicator, f.textStrColor(qst, ": "), "\n",
+	fmt.Print(f.Indicator, f.textStrColor(qst, ": "), "\n",
 		grayStrColor("(Press space to select option, enter to lock in your selections)"),
 		f.multiselectOptions(opts, selectedIdx, answerBools, false, false), "\n",
 	)
@@ -52,7 +52,7 @@ func (f *Form) MultiSelectInput(qst string, opts []string) ([]string, error) {
 		}
 
 		fmt.Print(
-			MACROS["clean_and_up"], f.SelectedLineIndicator, f.textStrColor(qst, ": "), "\n",
+			MACROS["clean_and_up"], f.Indicator, f.textStrColor(qst, ": "), "\n",
 			grayStrColor("(Press space to select option, enter to lock in your selections)"),
 			f.multiselectOptions(opts, selectedIdx, answerBools, false, true), "\n",
 		)

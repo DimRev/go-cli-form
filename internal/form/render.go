@@ -8,7 +8,8 @@ type Part struct {
 }
 
 type Line struct {
-	Part []Part
+	Part      []Part
+	BreakLine bool
 }
 
 // Render a line to the terminal with a swap ch that blocks the routing waiting
@@ -21,7 +22,11 @@ func Render() (lineCh chan Line, toSwapCh chan bool) {
 			for _, p := range l.Part {
 				str += colorizeString(p)
 			}
-			fmt.Println(str)
+			if l.BreakLine {
+				fmt.Println(str)
+			} else {
+				fmt.Print(str)
+			}
 			c := <-toSwapCh // Blocks waiting for user input
 			if c {
 				fmt.Print(MACROS["clean_and_up"])
