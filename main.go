@@ -5,6 +5,6 @@ import "github.com/DimRev/go-cli-form/demo"
 func main() {
 	// demo.RenderDemo()
 	// demo.FormDemo()
-	// demo.TextInputDemo()
 	demo.SelectInputDemo()
+	demo.TextInputDemo()
 }

@@ -9,6 +9,8 @@ import (
 func (f *Form) SelectInput(qst string, opts []string) (string, error) {
 	answerIdx := 0
 
+	fmt.Print(ANSI["disable_cur"])
+
 	err := keyboard.Open()
 	if err != nil {
 		panic(err)
@@ -18,8 +20,17 @@ func (f *Form) SelectInput(qst string, opts []string) (string, error) {
 		_ = keyboard.Close()
 	}()
 
-	fmt.Print(f.Indicator, f.textStrColor(qst, ": "), f.selectOptions(opts, answerIdx, false), "\n")
+	l1 := Line{BreakLine: true}
+	l1.Part = append(l1.Part, Part{
+		Color:   f.IndicatorColor,
+		Content: f.Indicator,
+	}, Part{
+		Color:   f.TextColor,
+		Content: qst,
+	})
+	l1.Part = append(l1.Part, f.selectOptions(opts, answerIdx, true)...)
 
+	f.renderLineCh <- l1
 	for {
 		_, key, err := keyboard.GetKey()
 		if err != nil {
@@ -42,34 +53,59 @@ func (f *Form) SelectInput(qst string, opts []string) (string, error) {
 			}
 
 		}
-		if key == keyboard.KeyEnter || key == keyboard.KeyEsc {
+		if key == keyboard.KeyEnter || key == keyboard.KeyEsc || key == keyboard.KeyCtrlC {
 			break
 		}
+		f.swapRenderedLineCh <- true
 
-		fmt.Print(MACROS["clean_and_up"], f.Indicator, f.textStrColor(qst, ": "), f.selectOptions(opts, answerIdx, false), "\n")
+		l1 = Line{BreakLine: true}
+		l1.Part = append(l1.Part, Part{
+			Color:   f.IndicatorColor,
+			Content: f.Indicator,
+		}, Part{
+			Color:   f.TextColor,
+			Content: qst,
+		})
+		l1.Part = append(l1.Part, f.selectOptions(opts, answerIdx, false)...)
+
+		f.renderLineCh <- l1
 	}
-	fmt.Print(MACROS["clean_and_up"], f.FormTheme.TextColor, f.textStrColor(qst, ": "), f.selectOptions(opts, answerIdx, true), "\n")
+
+	f.swapRenderedLineCh <- true
+
+	l1 = Line{BreakLine: true}
+	l1.Part = append(l1.Part, Part{
+		Color:   f.TextColor,
+		Content: qst,
+	})
+	l1.Part = append(l1.Part, f.selectOptions(opts, answerIdx, true)...)
+
+	f.renderLineCh <- l1
+
 	return opts[answerIdx], nil
 }
 
-func (f *Form) selectOptions(opts []string, ansIdx int, isLocked bool) string {
-	formattedString := ""
+func (f *Form) selectOptions(opts []string, ansIdx int, isLocked bool) []Part {
+	answerParts := []Part{}
 	for idx, option := range opts {
 		if idx == ansIdx {
 			if isLocked {
-				formattedString += fmt.Sprint(f.selectedStrColor(option))
+				answerParts = append(answerParts, Part{
+					Color:   f.SelectColor,
+					Content: option,
+				})
 			} else {
-				formattedString += fmt.Sprint(f.markedStrColor(option))
+				answerParts = append(answerParts, Part{
+					Color:   f.MarkColor,
+					Content: option,
+				})
 			}
 		} else {
-			formattedString += fmt.Sprint(option)
-		}
-		if idx < len(opts)-1 {
-			formattedString += " / "
-		} else {
-			formattedString += " "
-
+			answerParts = append(answerParts, Part{
+				Color:   f.TextColor,
+				Content: option,
+			})
 		}
 	}
-	return formattedString
+	return answerParts
 }
