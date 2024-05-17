@@ -28,7 +28,7 @@ func (f *Form) SelectInput(qst string, opts []string) (string, error) {
 		Color:   f.TextColor,
 		Content: qst,
 	})
-	l1.Part = append(l1.Part, f.selectOptions(opts, answerIdx, true)...)
+	l1.Part = append(l1.Part, f.selectOptions(opts, answerIdx, false)...)
 
 	f.renderLineCh <- l1
 	for {
